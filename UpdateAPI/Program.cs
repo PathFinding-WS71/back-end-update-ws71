@@ -18,7 +18,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//dependecy inyection
+//dependency injection
 builder.Services.AddScoped<IUserInfrastructure, UserInfrastructure>();
 builder.Services.AddScoped<IUserDomain, UserDomain>();
 
@@ -43,21 +43,21 @@ builder.Services.AddScoped<ITokenDomain, TokenDomain>();
 builder.Services.AddScoped<ICommunityMemberInfrastructure, CommunityMemberInfrastructure>();
 builder.Services.AddScoped<ICommunityMemberDomain, CommunityMemberDomain>();
 
-//Conexion a MySQL 
+//Connection to MySQL 
 var connectionString = builder.Configuration.GetConnectionString("upDateConnection");
 var serverVersion = new MySqlServerVersion(new Version(8, 0, 29));
 
-builder.Services.AddAuthentication(options =>
+/*builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-});
+});*/
 
-/*builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
     builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
-}));*/
+}));
 
 builder.Services.AddDbContext<UpdateDbContext>(
     dbContextOptions =>
@@ -96,7 +96,7 @@ app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader());
 
-app.UseMiddleware<JwtMiddleware>();
+//app.UseMiddleware<JwtMiddleware>();
 
 app.UseHttpsRedirection();
 
